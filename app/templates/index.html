@@ -1,0 +1,77 @@
+{% extends "bootstrap/base.html" %}
+{# Loads some of the macros included with Flask-Bootstrap. We are using the
+utils module here to automatically render Flask's flashed messages in a
+bootstrap friendly manner #}
+{% import "bootstrap/utils.html" as utils %}
+{% block title %}home{% endblock %}
+{% block styles %}  
+  {{ super() }} 
+  {# Call in our scripts *after* bootstrap calls in jquery 
+	#}
+  <link href="{{ url_for('static', filename='utils.css') }}" rel="stylesheet">
+{% endblock %} 
+
+{# 
+Inside the ``content`` is where you should place most of your own stuff.
+This will keep scripts at the page end and a navbar you add on later
+intact. 
+#}
+{% block content %}
+
+
+<div class="container">
+  {% include "navbar.html"  %}
+
+
+  {%- with messages = get_flashed_messages(with_categories=True) %}
+  {%- if messages %}
+  <div class="row">
+    <div class="col-sm-12">
+      {{utils.flashed_messages(messages)}}
+    </div>
+  </div>
+  {%- endif %}
+  {%- endwith %}
+
+  <div>
+
+    {% if g.show_input_form %}
+
+    <form class="form" action="" method="post">
+      <div class="form-group col-md-12" >
+        <input type="text" class="form-control" id="input_f1" placeholder="url_to_shorten" name=url_to_shorten >
+        <button type="submit" class="btn btn-primary">DO IT</button>
+      </div>
+    </form>
+
+    {% endif %}
+    {% if g.show_results %}
+    <h5>Original url</h5>
+    <p><a href= "{{ g.orig_url }}">{{ g.orig_url }}</a></p>
+    <h5>Shortened url</h5>
+    <p><a href= "{{ g.short_url }}">{{ g.short_url }}</a></p>
+    <h5>QR Code<h5>
+    <div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
+    {% endif %}
+
+
+  </div>
+
+
+</div>
+{%- endblock %}
+
+{# #}
+{% block scripts %}  
+{{ super() }} 
+{# Call in our scripts *after* bootstrap calls in jquery #}
+<script type="text/javascript">
+  var orig_url = "{{ g.orig_url }}" ;
+  var short_url = "{{ g.short_url }}" ; 
+</script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='utils.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='qrcode.min.js') }}"></script>
+
+{% endblock %} 
+

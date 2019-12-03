@@ -1,0 +1,6 @@
+requests==2.22.0
+Flask==1.1.1
+flask_bootstrap==3.3.7.1
+flask_login==0.4.1
+flask_restful==0.3.7
+python-dotenv==0.10.3
