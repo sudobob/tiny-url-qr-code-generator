@@ -23,7 +23,7 @@ python3 run.py
 
 ```
 git clone <this repo> <dest dir> cd <dest dir>
-docker -t tinyurl .
+docker build --tag tinyurl .
 docker run \
  --name tinyurl_container \
  -P  -it -p 60000:60000  \
