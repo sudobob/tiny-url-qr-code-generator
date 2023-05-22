@@ -1,4 +1,4 @@
-requests==2.22.0
+requests==2.31.0
 Flask==1.1.1
 flask_bootstrap==3.3.7.1
 flask_login==0.4.1
